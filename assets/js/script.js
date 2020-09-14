@@ -11,7 +11,12 @@ var getCityWeather = function(city) {
         
     fetch(currentApiUrl)
         .then(function(weatherResponse) {
-            return weatherResponse.json();
+            if (weatherResponse.ok) {
+                return weatherResponse.json();
+            }
+            else {
+                alert("Error: " + weatherResponse.statusText);
+            }
         })
         .then(function(weatherResponse) {
             var lat =weatherResponse.coord.lat;
@@ -20,9 +25,9 @@ var getCityWeather = function(city) {
             return fetch(oneCallUrl);
         })
         .then(function(response) {
-            if (response.ok) {
+            
             return response.json();
-            } 
+           
         })
         .then(function(response) {
             if (response.length === 0) {
