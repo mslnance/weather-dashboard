@@ -26,7 +26,7 @@ Provide the ability to search cities and receive current weather and a 5 day for
 
 <a name="screenshots"></a>
 ## Screenshots
-![Screenshot](/assets/images/Screenshot.png?raw=true "Screenshot")
+![Screenshot](/assets/images/Screenshot.PNG?raw=true "Screenshot")
 
 <a name="ltda"></a>
 ## Link to deployed application
