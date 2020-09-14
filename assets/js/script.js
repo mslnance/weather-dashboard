@@ -4,6 +4,7 @@ var currLocContainerEl = document.querySelector("#current-container");
 var forcastLocContainerEl = document.querySelector("#forecast-container");
 var locationSearchTerm = document.querySelector("#city-search-term");
 var forcastContainerEl = document.querySelector("#forecast-cards");
+var historyButtons = document.querySelector("#cty-buttons");
 
 var getCityWeather = function(city) {
     var currentApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"US&units=imperial&appid=7237e13bdfbbebde9cabfb6df127c7f2";
@@ -15,36 +16,32 @@ var getCityWeather = function(city) {
         .then(function(weatherResponse) {
             var lat =weatherResponse.coord.lat;
             var lon =weatherResponse.coord.lon;
-            console.log(lat);
-            console.log(lon);
             var oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&units=imperial&appid=7237e13bdfbbebde9cabfb6df127c7f2";
-            
             return fetch(oneCallUrl);
         })
         .then(function(response) {
+            if (response.ok) {
             return response.json();
+            } 
         })
         .then(function(response) {
             if (response.length === 0) {
                 console.log('There is no data for the city you selected');
-              } else {
-                    displayWeather(response, city);
-                }
-            })
-        };
+            } else {
+                displayWeather(response, city);
+            }
+    })
+};
 
 var displayCurWeather = function(allWeather, searchTerm) {
     var curIcon = allWeather.current.weather[0].icon;
     // create a div element to hold Icon
-    //var curIconEl = document.createElement("div");
     var curIconDispEl = document.createElement("span");
     var curImg = document.createElement('img'); 
-    
-    //console.log(humDispEl.textContent);
+        
     curImg.src =  "http://openweathermap.org/img/wn/" + curIcon + "@2x.png";
     curIconDispEl.appendChild(curImg);
-    console.log(curImg);
-    
+        
     var curDate = new Date(allWeather.current.dt *1000 );
     // clear old content
     currLocContainerEl.textContent = "";
@@ -55,10 +52,8 @@ var displayCurWeather = function(allWeather, searchTerm) {
     var curTemp = allWeather.current.temp;
     var curHum = allWeather.current.humidity;
     var curWindSpeed = allWeather.current.wind_speed;
-    var curHum = allWeather.current.humidity;
     var curUv = allWeather.current.uvi;
-    
-        
+            
     var curWeatherEl = document.createElement("div");
     curWeatherEl.classList = "list-item flex-row justify-space-between align-center";
     
@@ -68,7 +63,7 @@ var displayCurWeather = function(allWeather, searchTerm) {
 
     var tempDispEl = document.createElement("span");
     tempDispEl.textContent = "Temperature: " + curTemp + " °F";
-    console.log(tempDispEl.textContent);
+    //console.log(tempDispEl.textContent);
 
     // create a div element to hold Humidity
     var curHumEl = document.createElement("div");
@@ -76,42 +71,36 @@ var displayCurWeather = function(allWeather, searchTerm) {
 
     var humDispEl = document.createElement("span");
     humDispEl.textContent = "Humidity: " + curHum + "%";
-    console.log(humDispEl.textContent);
-
-     // create a div element to hold Wind Speed
-     var curWindEl = document.createElement("div");
-     curWindEl.classList = "padDiv col-12 col-md-8";
+    
+    // create a div element to hold Wind Speed
+    var curWindEl = document.createElement("div");
+    curWindEl.classList = "padDiv col-12 col-md-8";
  
-     var windDispEl = document.createElement("span");
-     windDispEl.textContent = "Wind Speed: " + curHum + " MPH";
-     console.log(windDispEl.textContent);
-
-     // create a div element to hold UV Index
-     var curUviEl = document.createElement("div");
-     curUviEl.classList = "padDiv col-12 col-md-8";
-     curUviEl.textContent = "UV Index: "
+    var windDispEl = document.createElement("span");
+    windDispEl.textContent = "Wind Speed: " + curWindSpeed + " MPH";
      
-     var uviDispEl = document.createElement("span");
-     uviDispEl.textContent=curUv ;
-     uviDispEl.classList="corners";
-     if (curUv <= 2) {
+    // create a div element to hold UV Index
+    var curUviEl = document.createElement("div");
+    curUviEl.classList = "padDiv col-12 col-md-8";
+    curUviEl.textContent = "UV Index: "
+     
+    var uviDispEl = document.createElement("span");
+    uviDispEl.textContent=curUv ;
+    uviDispEl.classList="corners";
+    if (curUv <= 2) {
         uviDispEl.style.backgroundColor="var(--success)";
         
-     } else if (curUv >=3 && curUv <6 ) {
+    } else if (curUv >=3 && curUv <6 ) {
         uviDispEl.style.backgroundColor="var(--warning)";  
-     } else {
+    } else {
         uviDispEl.style.backgroundColor="var(--danger)"; 
-     }
+    }
 
-     console.log(uviDispEl.textContent);
- 
-     // append to container
+    // append to container
     curTempEl.appendChild(tempDispEl);
     curHumEl.appendChild(humDispEl);
     curWindEl.appendChild(windDispEl);
     curUviEl.appendChild(uviDispEl);
-    
-    
     curWeatherEl.appendChild(curTempEl);
     curWeatherEl.appendChild(curHumEl);
     curWeatherEl.appendChild(curWindEl);
@@ -140,7 +129,7 @@ var displayForecast = function(allWeather, searchTerm) {
         var dlyTemp = allWeather.daily[i].temp.day;
         var dlyHum = allWeather.daily[i].humidity;
         var dlyIcon = allWeather.daily[i].weather[0].icon;
-        console.log(dlyIcon);       
+        //console.log(dlyIcon);       
         var dlyWeatherEl = document.createElement("div");
         dlyWeatherEl.classList = "card bg-primary ";
 
@@ -157,48 +146,56 @@ var displayForecast = function(allWeather, searchTerm) {
 
         var tempDispEl = document.createElement("span");
         tempDispEl.textContent = "Temperature: " + dlyTemp + " °F";
-        console.log(tempDispEl.textContent);
-
+       
         // create a div element to hold Humidity
         var dlyHumEl = document.createElement("div");
         var humDispEl = document.createElement("span");
         humDispEl.textContent = "Humidity: " + dlyHum + "%";
-        console.log(humDispEl.textContent);
-
+       
         // create a div element to hold Icon
         
         var dlyIconEl = document.createElement("div");
         var iconDispEl = document.createElement("span");
         var img = document.createElement('img'); 
-        //console.log(humDispEl.textContent);
         img.src =  "http://openweathermap.org/img/wn/" + dlyIcon + "@2x.png";
-        console.log(img);
+        
         // append to container
         dlyIconEl.appendChild(img);
         dlyTempEl.appendChild(tempDispEl);
         dlyHumEl.appendChild(humDispEl);
-        
-        
-       dlyCardEl.appendChild(dlyIconEl); 
-       dlyCardEl.appendChild(dlyTempEl);
-       dlyCardEl.appendChild(dlyHumEl);
-          
-        // append container to the dom
-        
+        dlyCardEl.appendChild(dlyIconEl); 
+        dlyCardEl.appendChild(dlyTempEl);
+        dlyCardEl.appendChild(dlyHumEl);
         dlyWeatherEl.appendChild(dlyDateEl);
         dlyWeatherEl.appendChild(dlyCardEl);
-            
         forCardEl.appendChild(dlyWeatherEl);
         forcastLocContainerEl.appendChild(secTitleDispEl);
         forcastLocContainerEl.appendChild(forCardEl);
     }
 }
+
+function renderCity() {
+    var city = localStorage.getItem("city");
+    
+    if (city === null) {
+      return;
+    }
+  
+    var cityButtonEl=document.createElement("button");
+    cityButtonEl.textContent = city;
+    cityButtonEl.classList = "cty-btn";
+    cityButtonEl.setAttribute("data-city",city);
+    historyButtons.appendChild(cityButtonEl);
+}
+  
 //combine current and forecast info
 var displayWeather = function(allWeather, searchTerm) {
     console.log(allWeather);
     console.log(searchTerm);
+    localStorage.setItem("city", searchTerm);
     displayCurWeather(allWeather, searchTerm);
     displayForecast(allWeather, searchTerm);
+    renderCity();
 };
 
 var formSubmitHandler = function(event) {
@@ -207,7 +204,6 @@ var formSubmitHandler = function(event) {
     // get value from input element
     var cityname = cityInputEl.value.trim();
    
-    //console.log(cityname);
     if (cityname) {
         getCityWeather(cityname);
         cityInputEl.value = "";
@@ -217,3 +213,14 @@ var formSubmitHandler = function(event) {
 };
 
 locationFormEl.addEventListener("submit", formSubmitHandler);
+
+var buttonClickHandler = function(event) {
+    var city = event.target.getAttribute("data-city");
+    if (city) {
+        getCityWeather(city);
+    
+      
+    }
+  };
+  
+  historyButtons.addEventListener("click", buttonClickHandler);
