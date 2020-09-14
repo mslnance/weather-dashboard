@@ -2,17 +2,7 @@
 * {
   box-sizing: border-box;
 }
-
-body {
-  
-  margin: 0;
-  padding: 0;
-  font-family: "Arial"
-  color: var(--dark);
-  line-height: 1.5;
-  font-size: 16px;
-}
-
+ 
 
 
 h1,
@@ -32,6 +22,10 @@ main {
   width: 94%;
 }
 
+.padDiv {
+  padding: 10px 0px 10px 0px;
+ 
+}
 p {
   font-size: 1.2rem;
 }
@@ -52,40 +46,12 @@ p {
   
 }
 
- .btn:hover {
-  color: var(--primary);
-  background-color: var(--tertiary);
-  transform: translate(0, 0);
-  box-shadow: 2px 2px var(--dark);
+.corners {
+  border-radius: 5px;
+  padding: 5px;
+  
 }
 
-.btn-inline {
-  display: inline;
-}
-
-.btn-back {
-  border-radius: var(--border-radius);
-  color: var(--primary);
-  border: none;
-  outline: none;
-  background-color: var(--light-dark);
-  box-shadow: 3px 3px var(--secondary);
-  transform: translate(-1px, -1px);
-  display: inline-block;
-  width: auto;
-  margin-top: 20px;
-  padding: 15px;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
- .btn-back:hover {
-  color: var(--primary);
-  background-color: var(--tertiary);
-  transform: translate(0, 0);
-  box-shadow: 2px 2px var(--dark);
-}
-*/
 .hero {
   padding: 2% 3%;
   
@@ -95,12 +61,6 @@ p {
   max-width: 75%;
 }
 
-.app-title {
-  font-size: 3rem;
-  padding: 0 10px;
-  display: inline-block;
-  
-}
 
 .list-group {
   padding: 0;
@@ -110,21 +70,20 @@ p {
 .list-item {
   margin-bottom: 10px;
   padding: 1.5%;
-  border-radius: var(--border-radius);
-  background-color: var(--light-dark);
-  color: var(--primary);
+  
+  
   text-decoration: none;
 }
 
 .list-item:hover {
-  background-color: var(--dark);
+  background-color: rgba(255,255,255, 1);
 }
 
 .status-icon {
   padding: 2px 5px;
   margin: 0 5px;
   background-color: rgba(255,255,255, 1);
-  border-radius: var(--border-radius);
+  
 }
 
 .icon-danger {
@@ -138,19 +97,20 @@ p {
 /* CARDS */
 .card {
   margin: 0 0 20px 0;
-  border: 3px solid var(--dark);
-  border-radius: var(--border-radius);
+  
+  
 }
 
+
+
 .card-header {
-  color: var(--primary);
-  background-color: var(--dark);
-  padding: 2.5%;
+  
+  /* padding: 2.5%; */
   border-radius: calc(.18rem - 1px) calc(.18rem - 1px) 0 0;
 }
 
 .card-body {
-  padding: 2.0%;
+  /*padding: 2.0%;*/
 }
 
 /* FORM */
@@ -170,8 +130,7 @@ p {
   padding: 3%;
   margin: 5px 0;
   font-size: 1.2rem;
-  border: 2px solid var(--light-dark);
-  border-radius: var(--border-radius);
+  
 }
 
 /* HEIGHT / WIDTH UTILS */
